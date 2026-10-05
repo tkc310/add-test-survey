@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run && playwright test",
-    "test:unit": "vitest run --reporter=verbose lib/**/*.test.ts",
-    "test:integration": "vitest run --reporter=verbose components/**/*.test.tsx",
+    "test:unit": "vitest run --reporter=verbose --dir lib",
+    "test:integration": "vitest run --reporter=verbose --dir components",
     "test:e2e": "playwright test",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
