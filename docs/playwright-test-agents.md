@@ -80,7 +80,7 @@ seed だけ:
 npx playwright test -c playwright.agents.config.ts e2e-pw-agents/seed.spec.ts
 ```
 
-開発サーバーは `playwright.agents.config.ts` の `webServer` が `npm run dev`（port 3100）を起動します。既に `http://127.0.0.1:3100` で動いていれば再利用します。
+開発サーバーは `playwright.agents.config.ts` の `webServer` が `npm run dev`（port 3100）を起動します。既に `http://localhost:3100` で動いていれば再利用します。
 
 ## エージェントの使い方（概要）
 

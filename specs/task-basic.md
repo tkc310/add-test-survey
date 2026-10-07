@@ -22,7 +22,7 @@
 **Steps:**
 
 1. タスク入力欄（placeholder: 「タスクを入力...」）をクリックする
-2. 「Playwright Test Agents のサンプル」と入力する
+2. 一意なタスク名（例: 「Playwright Test Agents サンプル」）を入力する
 3. 「追加」ボタンをクリックする
 
 **Expected Results:**
