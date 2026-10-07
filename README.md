@@ -109,6 +109,16 @@ npm run test:e2e          # E2Eテストのみ
 npm run test:watch        # ウォッチモード（開発中）
 ```
 
+### Storybook / VRT（アドホック）
+
+```bash
+npm run storybook         # Storybook 開発サーバー
+npm run test:vrt          # Button / TaskForm ストーリーの VRT
+npm run test:vrt:update   # VRT ベースライン更新
+```
+
+VRT は CI では実行しません。ベースラインの置き場と更新手順は [docs/vrt.md](docs/vrt.md) を参照してください。
+
 ### 開発サーバー
 
 ```bash
