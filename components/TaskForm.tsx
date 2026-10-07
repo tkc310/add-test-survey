@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Button } from '@/components/Button'
 
 interface TaskFormProps {
   onTaskCreated?: (title: string) => Promise<void>
@@ -59,13 +60,9 @@ export function TaskForm({ onTaskCreated }: TaskFormProps) {
             className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
             aria-describedby={error ? 'task-error' : undefined}
           />
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <Button type="submit" variant="primary" disabled={loading}>
             {loading ? '追加中...' : '追加'}
-          </button>
+          </Button>
         </div>
         {error && (
           <p id="task-error" className="mt-2 text-sm text-red-600" role="alert">

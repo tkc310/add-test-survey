@@ -1,5 +1,6 @@
 'use client'
 
+import { Button } from '@/components/Button'
 import { Task } from '@/lib/types'
 import { toggleTask, deleteTask } from '@/lib/actions'
 
@@ -62,13 +63,13 @@ export function TaskList({ tasks, onTaskUpdate }: TaskListProps) {
               {task.title}
             </span>
           </div>
-          <button
+          <Button
+            variant="danger"
             onClick={() => handleDelete(task.id)}
-            className="px-3 py-1 text-sm text-red-600 hover:bg-red-50 rounded"
             aria-label={`${task.title}を削除`}
           >
             削除
-          </button>
+          </Button>
         </li>
       ))}
     </ul>
