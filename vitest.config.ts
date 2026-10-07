@@ -14,6 +14,7 @@ export default defineConfig({
       '**/node_modules/**',
       '**/e2e/**',
       '**/e2e-agent/**',
+      '**/e2e-pw-agents/**',
       '**/playwright/**',
       '**/*.vrt.test.{ts,tsx}',
     ],

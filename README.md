@@ -144,6 +144,16 @@ npm run test:e2e:agent                 # スイート全体（agent にはキー
 
 Node.js 24.8+（または 22.22.3+）が必要です。詳細は [docs/tester-army-e2e.md](docs/tester-army-e2e.md) を参照してください。
 
+### Playwright Test Agents（アドホック）
+
+[Playwright Test Agents](https://playwright.dev/docs/test-agents)（planner / generator / healer）のサンプルは `e2e-pw-agents/` と `specs/` にあります。既存の Playwright（`e2e/`）や TesterArmy（`e2e-agent/`）とは別設定で、**CI と `npm test` には含めていません**。
+
+```bash
+npm run test:e2e:pw-agents   # 生成サンプルの実行確認（AI 不要）
+```
+
+エージェント定義の再生成や planner の使い方は [docs/playwright-test-agents.md](docs/playwright-test-agents.md) を参照してください。
+
 ### 開発サーバー
 
 ```bash
