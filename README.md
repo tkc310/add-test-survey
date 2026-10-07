@@ -133,6 +133,17 @@ npm run test:vrt:update   # VRT ベースライン更新
 
 VRT は CI では実行しません。ベースラインの置き場と更新手順は [docs/vrt.md](docs/vrt.md) を参照してください。
 
+### TesterArmy e2e（アドホック）
+
+[TesterArmy e2e](https://tester.army/e2e) のサンプルは `e2e-agent/` にあります。既存の Playwright（`e2e/*.spec.ts` / `test:e2e`）とは別ランナーで、**CI と `npm test` には含めていません**。
+
+```bash
+npm run test:e2e:agent:deterministic   # API キー不要のサンプル
+npm run test:e2e:agent                 # スイート全体（agent にはキーが必要）
+```
+
+Node.js 24.8+（または 22.22.3+）が必要です。詳細は [docs/tester-army-e2e.md](docs/tester-army-e2e.md) を参照してください。
+
 ### 開発サーバー
 
 ```bash
