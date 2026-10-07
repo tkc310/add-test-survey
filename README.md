@@ -81,11 +81,11 @@ Testing Trophyは、テストの適切なバランスを示すモデルです：
     /----------\
    /   Unit    \    ← 多数（純粋関数）
   /------------\
- / Static Analysis \ ← TypeScript/ESLint
+ / Static Analysis \ ← TypeScript/oxlint
 ```
 
 推奨するテストの割合は次のとおりです：
-- Static Analysis（TypeScript、ESLint）で型チェックと静的解析
+- Static Analysis（TypeScript、oxlint）で型チェックと静的解析
 - Unit Tests（40-50%）で純粋関数をテスト
 - Integration Tests（40-50%）でコンポーネントの統合をテスト
 - E2E Tests（5-10%）で重要なユーザーフローのみテスト
@@ -108,6 +108,20 @@ npm run test:integration  # 統合テストのみ
 npm run test:e2e          # E2Eテストのみ
 npm run test:watch        # ウォッチモード（開発中）
 ```
+
+### Lint / Format
+
+日常の lint / format は **oxlint / oxfmt** を使います（詳細は [docs/lint-format.md](./docs/lint-format.md)）。
+
+```bash
+npm run lint              # oxlint
+npm run lint:fix          # oxlint の自動修正
+npm run format            # oxfmt（書き込み）
+npm run format:check      # oxfmt（チェックのみ）
+npm run lint:eslint       # 旧 ESLint（併記・退避用）
+```
+
+Prettier は導入していません。フォーマットは oxfmt に寄せます。ESLint は Next.js / Storybook 向けルールの退避用に残しており、新規ルールは oxlint 側を優先します。
 
 ### 開発サーバー
 
