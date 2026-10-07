@@ -17,6 +17,7 @@
     "test:e2e": "playwright test",
     "test:e2e:agent": "e2e run",
     "test:e2e:agent:deterministic": "e2e run e2e-agent/app-opens.e2e.ts e2e-agent/task-form.e2e.ts",
+    "test:e2e:pw-agents": "playwright test -c playwright.agents.config.ts",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",
