@@ -15,6 +15,11 @@
 /test-results/
 /playwright-report/
 /playwright/.cache/
+# VRT の差分画像（ベースライン `__screenshots__` はコミット対象）
+**/__screenshots__/**/__diff_output__/**
+**/__screenshots__/**/*-diff.png
+**/__screenshots__/**/*-actual.png
+.vitest/
 
 # next.js
 /.next/

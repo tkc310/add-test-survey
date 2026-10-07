@@ -9,7 +9,13 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./vitest.setup.ts'],
     include: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
-    exclude: ['**/node_modules/**', '**/e2e/**', '**/playwright/**'],
+    // VRT は vitest.vrt.config.ts でアドホック実行する
+    exclude: [
+      '**/node_modules/**',
+      '**/e2e/**',
+      '**/playwright/**',
+      '**/*.vrt.test.{ts,tsx}',
+    ],
   },
   resolve: {
     alias: {

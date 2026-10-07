@@ -123,6 +123,16 @@ npm run lint:eslint       # 旧 ESLint（併記・退避用）
 
 Prettier は導入していません。フォーマットは oxfmt に寄せます。ESLint は Next.js / Storybook 向けルールの退避用に残しており、新規ルールは oxlint 側を優先します。
 
+### Storybook / VRT（アドホック）
+
+```bash
+npm run storybook         # Storybook 開発サーバー
+npm run test:vrt          # Button / TaskForm ストーリーの VRT
+npm run test:vrt:update   # VRT ベースライン更新
+```
+
+VRT は CI では実行しません。ベースラインの置き場と更新手順は [docs/vrt.md](docs/vrt.md) を参照してください。
+
 ### 開発サーバー
 
 ```bash
