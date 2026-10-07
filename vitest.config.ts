@@ -13,6 +13,7 @@ export default defineConfig({
     exclude: [
       '**/node_modules/**',
       '**/e2e/**',
+      '**/e2e-agent/**',
       '**/playwright/**',
       '**/*.vrt.test.{ts,tsx}',
     ],
