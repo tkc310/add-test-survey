@@ -16,7 +16,23 @@ npm run format:check  # oxfmt（差分チェックのみ）
 - `.oxlintrc.json` … oxlint
 - `.oxfmtrc.json` … oxfmt
 
-CI への必須ゲートはまだ入れていません。必要になったらアドホック実行か、別途 CI 追加を検討してください。
+CI（`.github/workflows/test.yml`）では `npm run lint` と `npm run format:check` を実行します。
+
+## oxfmt のバージョン固定
+
+`package.json` では oxfmt を `0.72.0` のように **厳密バージョン**で指定します（`^` / `~` は付けない）。
+
+oxfmt は 0.x の minor 更新でも整形結果が変わることがある。範囲指定のままだと、依存更新のたびにリポジトリ全体の差分が発生しうるため、意図したバージョンへ明示的に上げる運用にする。
+
+## `.git-blame-ignore-revs`
+
+大規模な整形だけのコミットは、`.git-blame-ignore-revs` に SHA を登録している。ローカルで blame から除外するには次を実行する。
+
+```bash
+git config blame.ignoreRevsFile .git-blame-ignore-revs
+```
+
+マージ方法によってはコミット SHA が変わる（squash merge など）。その場合は、マージ後の整形コミット SHA で `.git-blame-ignore-revs` を更新すること。
 
 ## ESLint / Prettier との関係
 

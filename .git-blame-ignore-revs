@@ -1,0 +1,2 @@
+# 整形のみのコミット（git blame から除外する）
+# 使い方: git config blame.ignoreRevsFile .git-blame-ignore-revs

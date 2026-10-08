@@ -6,7 +6,12 @@
     "build/**",
     "coverage/**",
     "playwright-report/**",
+    "test-results/**",
     "storybook-static/**",
+    ".e2e/**",
+    ".bench-rtl/**",
+    ".vitest/**",
+    "**/__screenshots__/**",
     "package-lock.json",
     "next-env.d.ts"
   ]

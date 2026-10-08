@@ -122,6 +122,8 @@ npm run format:check      # oxfmt（チェックのみ）
 npm run lint:eslint       # 旧 ESLint（併記・退避用）
 ```
 
+oxfmt は `package.json` で厳密バージョン固定している（0.x の minor でも整形結果が変わりうるため）。大規模整形コミットは `.git-blame-ignore-revs` に載せているので、blame から除外する場合は `git config blame.ignoreRevsFile .git-blame-ignore-revs` を実行する。
+
 Prettier は導入していません。フォーマットは oxfmt に寄せます。ESLint は Next.js / Storybook 向けルールの退避用に残しており、新規ルールは oxlint 側を優先します。
 
 ### Storybook / VRT（アドホック）

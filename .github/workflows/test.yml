@@ -24,6 +24,12 @@ jobs:
       - name: 依存関係をインストール
         run: npm ci --legacy-peer-deps
 
+      - name: oxlint を実行
+        run: npm run lint
+
+      - name: oxfmt を実行
+        run: npm run format:check
+
       - name: Playwrightブラウザをインストール
         run: npx playwright install chromium --with-deps
 
