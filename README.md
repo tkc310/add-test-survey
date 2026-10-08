@@ -17,12 +17,12 @@ https://zenn.dev/tkc310/scraps/5002dde863d494
 - 対象: 純粋関数やロジック
 
 ```typescript
-describe('validateEmail', () => {
-  it('有効なメールアドレスを検証できる', () => {
-    const result = validateEmail('test@example.com')
-    expect(result.isValid).toBe(true)
-  })
-})
+describe("validateEmail", () => {
+  it("有効なメールアドレスを検証できる", () => {
+    const result = validateEmail("test@example.com");
+    expect(result.isValid).toBe(true);
+  });
+});
 ```
 
 純粋関数は最も速くテストでき、リファクタリング時の安全網として機能します。
@@ -30,24 +30,24 @@ describe('validateEmail', () => {
 ### 2. 統合テスト
 
 - 場所: `components/*.test.tsx`
-- ツール: Vitest + React Testing Library
+- ツール: Vitest（happy-dom）+ React Testing Library
 - 対象: コンポーネントと依存関係の統合
 
 ```typescript
 it('タスクを正常に作成できる', async () => {
   const user = userEvent.setup()
-  render(<TaskForm />)
-  
+  render(<TaskForm onTaskCreated={mockOnTaskCreated} />)
+
   await user.type(screen.getByPlaceholderText('タスクを入力...'), '新しいタスク')
   await user.click(screen.getByRole('button', { name: '追加' }))
-  
+
   await waitFor(() => {
-    expect(mockCreateTask).toHaveBeenCalledWith({ title: '新しいタスク' })
+    expect(mockOnTaskCreated).toHaveBeenCalledWith('新しいタスク')
   })
 })
 ```
 
-実際のユーザー操作に近い形でコンポーネントをテストします。Testing Trophyの中核となる層です。
+実際のユーザー操作に近い形でコンポーネントをテストします。Testing Trophyの中核となる層です。環境は jsdom ではなく happy-dom を使い、VRT（Browser Mode）とは別プロジェクトです。
 
 ### 3. E2Eテスト
 
@@ -56,15 +56,15 @@ it('タスクを正常に作成できる', async () => {
 - 対象: 重要なユーザーフロー全体
 
 ```typescript
-test('タスクの作成、完了、削除', async ({ page }) => {
-  await page.goto('/')
-  
-  await page.getByPlaceholder('タスクを入力...').fill('新しいタスク')
-  await page.getByRole('button', { name: '追加' }).click()
-  
-  await page.getByRole('checkbox').check()
-  await page.getByRole('button', { name: /削除/ }).click()
-})
+test("タスクの作成、完了、削除", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByPlaceholder("タスクを入力...").fill("新しいタスク");
+  await page.getByRole("button", { name: "追加" }).click();
+
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: /削除/ }).click();
+});
 ```
 
 実際のブラウザで実行され、クリティカルパスを保証します。
@@ -85,6 +85,7 @@ Testing Trophyは、テストの適切なバランスを示すモデルです：
 ```
 
 推奨するテストの割合は次のとおりです：
+
 - Static Analysis（TypeScript、oxlint）で型チェックと静的解析
 - Unit Tests（40-50%）で純粋関数をテスト
 - Integration Tests（40-50%）でコンポーネントの統合をテスト
@@ -261,17 +262,20 @@ UIまたは全体のフローに問題があります。AIに「E2Eテストで�
 ## テストレイヤーの選び方
 
 ユニットテストを書く対象：
+
 - 純粋関数（入力→出力が明確）
 - バリデーション、計算、フォーマット処理
 - 複雑なビジネスロジック
 
 統合テストを書く対象：
+
 - UIコンポーネント
 - ユーザーインタラクション
 - コンポーネント間の連携
 - フォーム送信
 
 E2Eテストを書く対象：
+
 - 重要なユーザーフロー（登録、ログイン、決済など）
 - 複数ページにまたがる操作
 - ビジネス上クリティカルな機能
@@ -296,8 +300,9 @@ E2Eテストはすべての機能に書くと遅くなります。細かいバ�
 │   └── validation.test.ts # ユニットテスト
 ├── e2e/                   # E2Eテスト
 │   └── app.spec.ts
-├── vitest.config.ts       # Vitest設定
-├── vitest.setup.ts        # Vitestセットアップ
+├── vitest.config.ts       # Vitest設定（unit / integration projects）
+├── vitest.setup.ts        # 統合テスト（RTL + happy-dom）セットアップ
+├── vitest.vrt.config.mts  # VRT 用 Browser Mode（アドホック・CI外）
 ├── playwright.config.ts   # Playwright設定
 └── .github/workflows/     # CI設定
     └── test.yml
@@ -315,6 +320,7 @@ GitHub Actionsでテストが自動実行されます：
 
 - [Testing Library](https://testing-library.com/)
 - [Vitest](https://vitest.dev/)
+- [happy-dom](https://github.com/capricorn86/happy-dom)
 - [Playwright](https://playwright.dev/)
 - [Testing Trophy by Kent C. Dodds](https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications)
 
