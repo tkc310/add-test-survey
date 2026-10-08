@@ -1,2 +1,5 @@
 # 整形のみのコミット（git blame から除外する）
 # 使い方: git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# oxfmt 0.72.0 によるリポジトリ全体整形
+ff63821f42c8a86f7e69ef170d6150f576bf9c30
