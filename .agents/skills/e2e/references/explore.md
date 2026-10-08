@@ -56,15 +56,15 @@ configured secrets are redacted (topic `writing-tests`).
 
 ## Flags
 
-| Flag | Default | Effect |
-| --- | --- | --- |
-| `[goal]` | `Explore the app and find bugs` | One quoted sentence: the area and the posture. |
-| `--target <id>` | first configured target | The one target to explore. |
-| `--agent <name>` | `default` | Build the explorer from another configured agent (`agents.<name>`). |
-| `--session <name>` | none | Run the setup that saves this session, then explore with it restored. |
-| `--max-steps <n>` | 8 (1 to 12) | Exploration steps at most. |
-| `--timeout <ms>` | 600000 (180000 to 900000) | Wall clock; the last minute is for the assessment. |
-| `--headed`, `--reporter`, `--output`, `--debug`, `--ai-trace`, `--trace [mode]`, `--video [mode]` | as `run` | Same meaning as for `e2e run`. One attempt, so a retry mode (`on-first-retry`, `on-all-retries`, the CI trace default) records nothing (`CI=1 e2e explore` needs `--trace on`; the run's notice says so); put the goal before a bare `--trace` or `--video`. |
+| Flag                                                                                              | Default                         | Effect                                                                                                                                                                                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `[goal]`                                                                                          | `Explore the app and find bugs` | One quoted sentence: the area and the posture.                                                                                                                                                                                                               |
+| `--target <id>`                                                                                   | first configured target         | The one target to explore.                                                                                                                                                                                                                                   |
+| `--agent <name>`                                                                                  | `default`                       | Build the explorer from another configured agent (`agents.<name>`).                                                                                                                                                                                          |
+| `--session <name>`                                                                                | none                            | Run the setup that saves this session, then explore with it restored.                                                                                                                                                                                        |
+| `--max-steps <n>`                                                                                 | 8 (1 to 12)                     | Exploration steps at most.                                                                                                                                                                                                                                   |
+| `--timeout <ms>`                                                                                  | 600000 (180000 to 900000)       | Wall clock; the last minute is for the assessment.                                                                                                                                                                                                           |
+| `--headed`, `--reporter`, `--output`, `--debug`, `--ai-trace`, `--trace [mode]`, `--video [mode]` | as `run`                        | Same meaning as for `e2e run`. One attempt, so a retry mode (`on-first-retry`, `on-all-retries`, the CI trace default) records nothing (`CI=1 e2e explore` needs `--trace on`; the run's notice says so); put the goal before a bare `--trace` or `--video`. |
 
 Per-step action and model-call budgets default to 40 each;
 `agents.<name>.maxSteps` and `agents.<name>.maxModelCalls` in the config
@@ -98,8 +98,35 @@ medium 3, low 2, trivial 1. `.e2e/report.json` has the record under
   "budgets": { "maxSteps": 8, "timeoutMs": 600000 },
   "ended": "finished | step-limit | time | stuck | aborted",
   "summary": "the closing assessment",
-  "steps": [{ "index": 1, "title": "...", "instruction": "...", "status": "passed | failed | blocked | exhausted", "summary": "...", "errorCode": "...", "startedAt": "...", "durationMs": 0 }],
-  "findings": [{ "id": "<uuid>", "index": 0, "step": 1, "kind": "issue", "severity": 4, "title": "...", "expected": "...", "actual": "...", "reproduction": ["..."], "path": "/cart", "observationRevision": "...", "artifactId": "<attempt id>:artifact:2", "reportedAt": "..." }]
+  "steps": [
+    {
+      "index": 1,
+      "title": "...",
+      "instruction": "...",
+      "status": "passed | failed | blocked | exhausted",
+      "summary": "...",
+      "errorCode": "...",
+      "startedAt": "...",
+      "durationMs": 0
+    }
+  ],
+  "findings": [
+    {
+      "id": "<uuid>",
+      "index": 0,
+      "step": 1,
+      "kind": "issue",
+      "severity": 4,
+      "title": "...",
+      "expected": "...",
+      "actual": "...",
+      "reproduction": ["..."],
+      "path": "/cart",
+      "observationRevision": "...",
+      "artifactId": "<attempt id>:artifact:2",
+      "reportedAt": "..."
+    }
+  ]
 }
 ```
 

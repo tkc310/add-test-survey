@@ -6,13 +6,13 @@
 
 ## 既存 Playwright との分離
 
-| 項目 | Playwright（既存） | TesterArmy e2e（本ドキュメント） |
-| --- | --- | --- |
-| 設定 | `playwright.config.ts` | `e2e.config.ts` |
-| テスト | `e2e/*.spec.ts` | `e2e-agent/**/*.e2e.ts` |
-| npm script | `test:e2e` | `test:e2e:agent` |
-| 通常の `npm test` | 含む | **含まない** |
-| CI（`.github/workflows/test.yml`） | 実行する | **実行しない** |
+| 項目                               | Playwright（既存）     | TesterArmy e2e（本ドキュメント） |
+| ---------------------------------- | ---------------------- | -------------------------------- |
+| 設定                               | `playwright.config.ts` | `e2e.config.ts`                  |
+| テスト                             | `e2e/*.spec.ts`        | `e2e-agent/**/*.e2e.ts`          |
+| npm script                         | `test:e2e`             | `test:e2e:agent`                 |
+| 通常の `npm test`                  | 含む                   | **含まない**                     |
+| CI（`.github/workflows/test.yml`） | 実行する               | **実行しない**                   |
 
 `@e2e-dev/web` は独自の `playwright-core` をピン留めするため、既存の `@playwright/test` と同居できます。
 

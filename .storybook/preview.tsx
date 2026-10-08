@@ -1,7 +1,7 @@
-import type { Preview } from '@storybook/nextjs-vite'
+import type { Preview } from "@storybook/nextjs-vite";
 
 // Tailwind などアプリ共通スタイルを Storybook でも適用する
-import '../app/globals.css'
+import "../app/globals.css";
 
 const preview: Preview = {
   parameters: {
@@ -15,9 +15,9 @@ const preview: Preview = {
       // 'todo' - テスト UI でのみ a11y 違反を表示
       // 'error' - a11y 違反で CI を失敗させる
       // 'off' - a11y チェックを無効化
-      test: 'todo',
+      test: "todo",
     },
   },
-}
+};
 
-export default preview
+export default preview;

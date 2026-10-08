@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from '@/components/Button'
+import { useState } from "react";
+import { Button } from "@/components/Button";
 
 interface TaskFormProps {
-  onTaskCreated?: (title: string) => Promise<void>
+  onTaskCreated?: (title: string) => Promise<void>;
 }
 
 /**
@@ -12,36 +12,36 @@ interface TaskFormProps {
  * フォームのバリデーションと送信処理をテストする対象
  */
 export function TaskForm({ onTaskCreated }: TaskFormProps) {
-  const [title, setTitle] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [title, setTitle] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError("");
 
     // クライアントサイドバリデーション
     if (!title.trim()) {
-      setError('タスクのタイトルを入力してください')
-      return
+      setError("タスクのタイトルを入力してください");
+      return;
     }
 
     if (title.length > 100) {
-      setError('タスクのタイトルは100文字以内である必要があります')
-      return
+      setError("タスクのタイトルは100文字以内である必要があります");
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
     try {
-      await onTaskCreated?.(title.trim())
-      setTitle('')
+      await onTaskCreated?.(title.trim());
+      setTitle("");
     } catch (err) {
-      setError('タスクの作成に失敗しました')
-      console.error(err)
+      setError("タスクの作成に失敗しました");
+      console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -58,10 +58,10 @@ export function TaskForm({ onTaskCreated }: TaskFormProps) {
             placeholder="タスクを入力..."
             disabled={loading}
             className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
-            aria-describedby={error ? 'task-error' : undefined}
+            aria-describedby={error ? "task-error" : undefined}
           />
           <Button type="submit" variant="primary" disabled={loading}>
-            {loading ? '追加中...' : '追加'}
+            {loading ? "追加中..." : "追加"}
           </Button>
         </div>
         {error && (
@@ -71,5 +71,5 @@ export function TaskForm({ onTaskCreated }: TaskFormProps) {
         )}
       </div>
     </form>
-  )
+  );
 }

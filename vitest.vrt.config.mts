@@ -1,11 +1,11 @@
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-import react from '@vitejs/plugin-react'
-import { playwright } from '@vitest/browser-playwright'
-import { defineConfig } from 'vitest/config'
+import react from "@vitejs/plugin-react";
+import { playwright } from "@vitest/browser-playwright";
+import { defineConfig } from "vitest/config";
 
-const dirname = path.dirname(fileURLToPath(import.meta.url))
+const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * アドホックなビジュアルリグレッション用 Vitest 設定。
@@ -16,33 +16,27 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: [
-      '@storybook/react',
-      'storybook/test',
-      'react',
-      'react-dom',
-      'react/jsx-dev-runtime',
-    ],
+    include: ["@storybook/react", "storybook/test", "react", "react-dom", "react/jsx-dev-runtime"],
   },
   resolve: {
     alias: {
-      '@': path.resolve(dirname, './'),
+      "@": path.resolve(dirname, "./"),
     },
   },
   test: {
-    name: 'vrt',
-    include: ['components/**/*.vrt.test.{ts,tsx}'],
-    setupFiles: ['./vitest.vrt.setup.ts'],
+    name: "vrt",
+    include: ["components/**/*.vrt.test.{ts,tsx}"],
+    setupFiles: ["./vitest.vrt.setup.ts"],
     browser: {
       enabled: true,
       headless: true,
       provider: playwright(),
       instances: [
         {
-          browser: 'chromium',
+          browser: "chromium",
           viewport: { width: 800, height: 600 },
         },
       ],
     },
   },
-})
+});

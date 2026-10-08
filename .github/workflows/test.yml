@@ -18,11 +18,17 @@ jobs:
       - name: Node.jsをセットアップ
         uses: actions/setup-node@v5
         with:
-          node-version: '24'
-          cache: 'npm'
+          node-version: "24"
+          cache: "npm"
 
       - name: 依存関係をインストール
         run: npm ci --legacy-peer-deps
+
+      - name: oxlint を実行
+        run: npm run lint
+
+      - name: oxfmt を実行
+        run: npm run format:check
 
       - name: Playwrightブラウザをインストール
         run: npx playwright install chromium --with-deps
