@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { page, userEvent } from "vitest/browser";
-import { render } from "vitest-browser-react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { TaskList } from "./TaskList";
 import * as actions from "@/lib/actions";
 
@@ -41,52 +41,58 @@ describe("TaskList", () => {
     vi.clearAllMocks();
   });
 
-  it("タスクリストを正しくレンダリングする", async () => {
-    await render(<TaskList tasks={mockTasks} onTaskUpdate={mockOnTaskUpdate} />);
+  it("タスクリストを正しくレンダリングする", () => {
+    render(<TaskList tasks={mockTasks} onTaskUpdate={mockOnTaskUpdate} />);
 
-    await expect.element(page.getByText("テストタスク1")).toBeInTheDocument();
-    await expect.element(page.getByText("テストタスク2")).toBeInTheDocument();
+    expect(screen.getByText("テストタスク1")).toBeInTheDocument();
+    expect(screen.getByText("テストタスク2")).toBeInTheDocument();
   });
 
-  it("タスクが空の場合にメッセージを表示する", async () => {
-    await render(<TaskList tasks={[]} onTaskUpdate={mockOnTaskUpdate} />);
+  it("タスクが空の場合にメッセージを表示する", () => {
+    render(<TaskList tasks={[]} onTaskUpdate={mockOnTaskUpdate} />);
 
-    await expect.element(page.getByText("タスクがありません")).toBeInTheDocument();
+    expect(screen.getByText("タスクがありません")).toBeInTheDocument();
   });
 
-  it("完了状態のタスクに打ち消し線が表示される", async () => {
-    await render(<TaskList tasks={mockTasks} onTaskUpdate={mockOnTaskUpdate} />);
+  it("完了状態のタスクに打ち消し線が表示される", () => {
+    render(<TaskList tasks={mockTasks} onTaskUpdate={mockOnTaskUpdate} />);
 
-    const completedTask = page.getByText("テストタスク2");
-    await expect.element(completedTask).toHaveClass("line-through");
+    const completedTask = screen.getByText("テストタスク2");
+    expect(completedTask).toHaveClass("line-through");
   });
 
   it("チェックボックスをクリックしてタスクを完了できる", async () => {
+    const user = userEvent.setup();
+
     mockToggleTask.mockResolvedValueOnce({
       ...mockTasks[0],
       completed: true,
     });
 
-    await render(<TaskList tasks={mockTasks} onTaskUpdate={mockOnTaskUpdate} />);
+    render(<TaskList tasks={mockTasks} onTaskUpdate={mockOnTaskUpdate} />);
 
-    const checkbox = page.getByLabelText("テストタスク1を完了としてマーク");
-    await userEvent.click(checkbox);
+    const checkbox = screen.getByLabelText("テストタスク1を完了としてマーク");
+    await user.click(checkbox);
 
-    await expect.poll(() => mockToggleTask.mock.calls.length).toBe(1);
-    expect(mockToggleTask).toHaveBeenCalledWith("1");
-    await expect.poll(() => mockOnTaskUpdate.mock.calls.length).toBe(1);
+    await waitFor(() => {
+      expect(mockToggleTask).toHaveBeenCalledWith("1");
+      expect(mockOnTaskUpdate).toHaveBeenCalled();
+    });
   });
 
   it("削除ボタンをクリックしてタスクを削除できる", async () => {
+    const user = userEvent.setup();
+
     mockDeleteTask.mockResolvedValueOnce(undefined);
 
-    await render(<TaskList tasks={mockTasks} onTaskUpdate={mockOnTaskUpdate} />);
+    render(<TaskList tasks={mockTasks} onTaskUpdate={mockOnTaskUpdate} />);
 
-    const deleteButton = page.getByLabelText("テストタスク1を削除");
-    await userEvent.click(deleteButton);
+    const deleteButton = screen.getByLabelText("テストタスク1を削除");
+    await user.click(deleteButton);
 
-    await expect.poll(() => mockDeleteTask.mock.calls.length).toBe(1);
-    expect(mockDeleteTask).toHaveBeenCalledWith("1");
-    await expect.poll(() => mockOnTaskUpdate.mock.calls.length).toBe(1);
+    await waitFor(() => {
+      expect(mockDeleteTask).toHaveBeenCalledWith("1");
+      expect(mockOnTaskUpdate).toHaveBeenCalled();
+    });
   });
 });

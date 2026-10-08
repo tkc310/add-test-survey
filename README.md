@@ -30,22 +30,24 @@ describe("validateEmail", () => {
 ### 2. 統合テスト
 
 - 場所: `components/*.test.tsx`
-- ツール: Vitest Browser Mode（Playwright プロバイダー）+ vitest-browser-react
+- ツール: Vitest（happy-dom）+ React Testing Library
 - 対象: コンポーネントと依存関係の統合
 
 ```typescript
 it('タスクを正常に作成できる', async () => {
-  await render(<TaskForm onTaskCreated={mockOnTaskCreated} />)
+  const user = userEvent.setup()
+  render(<TaskForm onTaskCreated={mockOnTaskCreated} />)
 
-  await userEvent.fill(page.getByPlaceholder('タスクを入力...'), '新しいタスク')
-  await userEvent.click(page.getByRole('button', { name: '追加' }))
+  await user.type(screen.getByPlaceholderText('タスクを入力...'), '新しいタスク')
+  await user.click(screen.getByRole('button', { name: '追加' }))
 
-  await expect.poll(() => mockOnTaskCreated.mock.calls.length).toBe(1)
-  expect(mockOnTaskCreated).toHaveBeenCalledWith('新しいタスク')
+  await waitFor(() => {
+    expect(mockOnTaskCreated).toHaveBeenCalledWith('新しいタスク')
+  })
 })
 ```
 
-実際のブラウザでユーザー操作に近い形でコンポーネントをテストします。Testing Trophyの中核となる層です。VRT（`*.vrt.test.tsx`）とは別プロジェクトで、CI ではこちらだけが走ります。
+実際のユーザー操作に近い形でコンポーネントをテストします。Testing Trophyの中核となる層です。環境は jsdom ではなく happy-dom を使い、VRT（Browser Mode）とは別プロジェクトです。
 
 ### 3. E2Eテスト
 
@@ -298,11 +300,11 @@ E2Eテストはすべての機能に書くと遅くなります。細かいバ�
 │   └── validation.test.ts # ユニットテスト
 ├── e2e/                   # E2Eテスト
 │   └── app.spec.ts
-├── vitest.config.ts           # Vitest設定（unit / integration projects）
-├── vitest.browser.setup.ts    # 統合テスト（Browser Mode）セットアップ
-├── vitest.vrt.config.mts      # VRT 用（アドホック・CI外）
-├── playwright.config.ts       # Playwright設定
-└── .github/workflows/         # CI設定
+├── vitest.config.ts       # Vitest設定（unit / integration projects）
+├── vitest.setup.ts        # 統合テスト（RTL + happy-dom）セットアップ
+├── vitest.vrt.config.mts  # VRT 用 Browser Mode（アドホック・CI外）
+├── playwright.config.ts   # Playwright設定
+└── .github/workflows/     # CI設定
     └── test.yml
 ```
 
@@ -316,8 +318,9 @@ GitHub Actionsでテストが自動実行されます：
 
 ## 参考リソース
 
-- [Vitest Browser Mode](https://vitest.dev/guide/browser/)
-- [vitest-browser-react](https://vitest.dev/guide/browser/#examples)
+- [Testing Library](https://testing-library.com/)
+- [Vitest](https://vitest.dev/)
+- [happy-dom](https://github.com/capricorn86/happy-dom)
 - [Playwright](https://playwright.dev/)
 - [Testing Trophy by Kent C. Dodds](https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications)
 
