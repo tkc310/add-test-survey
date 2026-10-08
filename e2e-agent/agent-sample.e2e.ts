@@ -1,5 +1,5 @@
-import { test } from '@e2e-dev/web'
-import { expect } from 'e2e'
+import { test } from "@e2e-dev/web";
+import { expect } from "e2e";
 
 /**
  * agent.act / agent.assert を使うサンプル。
@@ -10,11 +10,11 @@ import { expect } from 'e2e'
  *   npm run test:e2e:agent:deterministic
  *   AI_GATEWAY_API_KEY=... npm run test:e2e:agent -- e2e-agent/agent-sample.e2e.ts
  */
-test('エージェントがタスク追加フローを駆動する', async ({ app, agent, screen }) => {
-  await app.open('/')
+test("エージェントがタスク追加フローを駆動する", async ({ app, agent, screen }) => {
+  await app.open("/");
 
-  await agent.act('タスク入力欄に「エージェント追加タスク」と入力し、追加ボタンを押す')
-  await agent.assert('タスク一覧に「エージェント追加タスク」が表示されている')
+  await agent.act("タスク入力欄に「エージェント追加タスク」と入力し、追加ボタンを押す");
+  await agent.assert("タスク一覧に「エージェント追加タスク」が表示されている");
 
-  await expect(screen.getByText('エージェント追加タスク')).toBeVisible()
-})
+  await expect(screen.getByText("エージェント追加タスク")).toBeVisible();
+});

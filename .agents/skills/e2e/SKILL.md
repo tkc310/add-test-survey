@@ -17,25 +17,25 @@ and `expect` (topic `writing-tests`). Model sign-in commands are in
 
 ```ts
 // e2e.config.ts
-import type { E2EConfig } from 'e2e';
-import { web } from '@e2e-dev/web';
-import { gateway } from 'ai';
+import type { E2EConfig } from "e2e";
+import { web } from "@e2e-dev/web";
+import { gateway } from "ai";
 
 export default {
   targets: [
     {
       engine: web(),
       app: {
-        url: 'http://127.0.0.1:3000',
-        command: { executable: 'pnpm', args: ['dev'], log: '.e2e/logs/app.log' },
+        url: "http://127.0.0.1:3000",
+        command: { executable: "pnpm", args: ["dev"], log: ".e2e/logs/app.log" },
       },
     },
   ],
   // The model behind every agent.* step: an AI SDK instance; gateway() from 'ai' reads AI_GATEWAY_API_KEY or a Vercel OIDC token.
   agents: {
     default: {
-      model: gateway('openai/gpt-6-luna-fast'),
-      system: 'You are a thorough QA agent. Verify every outcome on screen.',
+      model: gateway("openai/gpt-6-luna-fast"),
+      system: "You are a thorough QA agent. Verify every outcome on screen.",
     },
   },
 } satisfies E2EConfig;
@@ -43,14 +43,14 @@ export default {
 
 ```ts
 // tests/billing.e2e.ts
-import { test } from '@e2e-dev/web';
-import { expect } from 'e2e';
+import { test } from "@e2e-dev/web";
+import { expect } from "e2e";
 
-test('a member upgrades to Pro', async ({ app, agent, screen, browser }) => {
-  await app.open('/settings/billing');
-  await agent.act('upgrade the workspace to the Pro plan');
-  await expect(screen.getByRole('status')).toContainText('Pro');
-  await expect(browser).toHaveURL('/settings/billing');
+test("a member upgrades to Pro", async ({ app, agent, screen, browser }) => {
+  await app.open("/settings/billing");
+  await agent.act("upgrade the workspace to the Pro plan");
+  await expect(screen.getByRole("status")).toContainText("Pro");
+  await expect(browser).toHaveURL("/settings/billing");
 });
 ```
 
@@ -63,16 +63,16 @@ the full documentation ships in the `docs/` directory of the installed `e2e`
 package (`node_modules/e2e/docs` in a single-package project); a link such as
 `/reference/cli` is `docs/reference/cli.mdx`.
 
-| Topic | File | Read it when |
-| --- | --- | --- |
-| `setup` | [references/setup.md](references/setup.md) | Adding e2e to a project, writing `e2e.config.ts`, starting the app from the config, mobile targets |
-| `writing-tests` | [references/writing-tests.md](references/writing-tests.md) | Writing or fixing tests: fixtures, locators, actions, matchers, sign-in sessions, the `browser` fixture |
-| `agent` | [references/agent.md](references/agent.md) | Adding `agent.*` steps, picking a model, cost and budgets, the replay cache |
-| `running` | [references/running.md](references/running.md) | CLI flags, reporters, `.e2e/report.json`, exit codes, CI |
-| `explore` | [references/explore.md](references/explore.md) | Exploring an app toward a goal without a test file: `e2e explore`, its budgets, verdict, and `run.explore` |
-| `debugging` | [references/debugging.md](references/debugging.md) | A run failed: error codes and their fixes, `--headed`, `--debug`, `--ai-trace` |
-| `mcp` | [references/mcp.md](references/mcp.md) | Driving the live app from a coding agent over MCP: `e2e mcp`, its tools, and the explore-then-write loop |
-| `bug-bash` | [references/bug-bash.md](references/bug-bash.md) | Asked to bug bash, QA, or hunt for bugs across an app or a branch: parallel `e2e explore` charters, merging findings, proving each with a repro test |
+| Topic           | File                                                       | Read it when                                                                                                                                         |
+| --------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `setup`         | [references/setup.md](references/setup.md)                 | Adding e2e to a project, writing `e2e.config.ts`, starting the app from the config, mobile targets                                                   |
+| `writing-tests` | [references/writing-tests.md](references/writing-tests.md) | Writing or fixing tests: fixtures, locators, actions, matchers, sign-in sessions, the `browser` fixture                                              |
+| `agent`         | [references/agent.md](references/agent.md)                 | Adding `agent.*` steps, picking a model, cost and budgets, the replay cache                                                                          |
+| `running`       | [references/running.md](references/running.md)             | CLI flags, reporters, `.e2e/report.json`, exit codes, CI                                                                                             |
+| `explore`       | [references/explore.md](references/explore.md)             | Exploring an app toward a goal without a test file: `e2e explore`, its budgets, verdict, and `run.explore`                                           |
+| `debugging`     | [references/debugging.md](references/debugging.md)         | A run failed: error codes and their fixes, `--headed`, `--debug`, `--ai-trace`                                                                       |
+| `mcp`           | [references/mcp.md](references/mcp.md)                     | Driving the live app from a coding agent over MCP: `e2e mcp`, its tools, and the explore-then-write loop                                             |
+| `bug-bash`      | [references/bug-bash.md](references/bug-bash.md)           | Asked to bug bash, QA, or hunt for bugs across an app or a branch: parallel `e2e explore` charters, merging findings, proving each with a repro test |
 
 ## Workflow
 

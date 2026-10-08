@@ -10,14 +10,14 @@
 
 ## 既存スイートとの分離
 
-| 項目 | Playwright（既存） | TesterArmy e2e | Playwright Test Agents（本ドキュメント） |
-| --- | --- | --- | --- |
-| 設定 | `playwright.config.ts` | `e2e.config.ts` | `playwright.agents.config.ts` |
-| テスト | `e2e/*.spec.ts` | `e2e-agent/**/*.e2e.ts` | `e2e-pw-agents/**/*.spec.ts` |
-| 計画 | （なし） | （なし） | `specs/*.md` |
-| npm script | `test:e2e` | `test:e2e:agent` | `test:e2e:pw-agents` |
-| 通常の `npm test` | 含む | **含まない** | **含まない** |
-| CI（`.github/workflows/test.yml`） | 実行する | **実行しない** | **実行しない** |
+| 項目                               | Playwright（既存）     | TesterArmy e2e          | Playwright Test Agents（本ドキュメント） |
+| ---------------------------------- | ---------------------- | ----------------------- | ---------------------------------------- |
+| 設定                               | `playwright.config.ts` | `e2e.config.ts`         | `playwright.agents.config.ts`            |
+| テスト                             | `e2e/*.spec.ts`        | `e2e-agent/**/*.e2e.ts` | `e2e-pw-agents/**/*.spec.ts`             |
+| 計画                               | （なし）               | （なし）                | `specs/*.md`                             |
+| npm script                         | `test:e2e`             | `test:e2e:agent`        | `test:e2e:pw-agents`                     |
+| 通常の `npm test`                  | 含む                   | **含まない**            | **含まない**                             |
+| CI（`.github/workflows/test.yml`） | 実行する               | **実行しない**          | **実行しない**                           |
 
 TesterArmy（`e2e` パッケージ / `agent.act`）とは別物です。こちらは `@playwright/test` の公式 `init-agents` が生成する planner / generator / healer 定義を使います。
 
@@ -51,14 +51,14 @@ npx playwright install chromium
 
 ## 成果物の置き場
 
-| パス | 内容 |
-| --- | --- |
-| `.github/agents/playwright-test-*.agent.md` | planner / generator / healer の定義 |
-| `.vscode/mcp.json` | `playwright-test` MCP（`npx playwright run-test-mcp-server`） |
-| `specs/task-basic.md` | planner 出力を模したテスト計画サンプル |
-| `e2e-pw-agents/seed.spec.ts` | seed（環境の起点） |
-| `e2e-pw-agents/task-basic.spec.ts` | generator 出力を模した実行可能なサンプル |
-| `playwright.agents.config.ts` | 本スイート専用の Playwright 設定 |
+| パス                                        | 内容                                                          |
+| ------------------------------------------- | ------------------------------------------------------------- |
+| `.github/agents/playwright-test-*.agent.md` | planner / generator / healer の定義                           |
+| `.vscode/mcp.json`                          | `playwright-test` MCP（`npx playwright run-test-mcp-server`） |
+| `specs/task-basic.md`                       | planner 出力を模したテスト計画サンプル                        |
+| `e2e-pw-agents/seed.spec.ts`                | seed（環境の起点）                                            |
+| `e2e-pw-agents/task-basic.spec.ts`          | generator 出力を模した実行可能なサンプル                      |
+| `playwright.agents.config.ts`               | 本スイート専用の Playwright 設定                              |
 
 ## 実行
 
