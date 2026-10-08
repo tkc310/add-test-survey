@@ -1,27 +1,48 @@
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
+import react from "@vitejs/plugin-react";
+import { playwright } from "@vitest/browser-playwright";
+import { defineConfig } from "vitest/config";
+
+const dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const alias = {
+  "@": path.resolve(dirname, "./"),
+};
+
+/**
+ * ユニット（Node）と統合（Browser Mode）を projects で分離する。
+ * VRT は vitest.vrt.config.mts でアドホック実行するため、ここには含めない。
+ */
 export default defineConfig({
-  plugins: [react()],
   test: {
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: ['./vitest.setup.ts'],
-    include: ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}'],
-    // VRT は vitest.vrt.config.ts でアドホック実行する
-    exclude: [
-      '**/node_modules/**',
-      '**/e2e/**',
-      '**/e2e-agent/**',
-      '**/e2e-pw-agents/**',
-      '**/playwright/**',
-      '**/*.vrt.test.{ts,tsx}',
+    projects: [
+      {
+        resolve: { alias },
+        test: {
+          name: "unit",
+          include: ["lib/**/*.test.{ts,tsx}"],
+          environment: "node",
+        },
+      },
+      {
+        plugins: [react()],
+        resolve: { alias },
+        test: {
+          name: "integration",
+          include: ["components/**/*.test.{ts,tsx}"],
+          // VRT は別設定で実行する
+          exclude: ["**/*.vrt.test.{ts,tsx}"],
+          setupFiles: ["./vitest.browser.setup.ts"],
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright(),
+            instances: [{ browser: "chromium" }],
+          },
+        },
+      },
     ],
   },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './'),
-    },
-  },
-})
+});
